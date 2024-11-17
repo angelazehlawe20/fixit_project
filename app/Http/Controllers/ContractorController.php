@@ -5,11 +5,48 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\FixitTrait;
 use App\Models\User;
+use App\Models\Contractor;
 use Illuminate\Support\Facades\Validator;
 
 class ContractorController extends Controller
 {
     use FixitTrait;
+
+
+    public function getContractorProfilePage(Request $request)
+    {
+        $validation = Validator::make($request->all(),[
+            'contractor_id' => 'required|exists:contractors,id'
+        ]);
+
+        if($validation->fails())
+        {
+            return $this->ErrorResponse($validation->errors(),422);
+        }
+
+        $contractor_id = Contractor::select('user_id','id','category_id','description')
+        ->with([
+            'portfolio.Portfolio_image.image'=>function($portfolio_image)
+        {
+            $portfolio_image->select('id', 'name');
+        },'rating'=>function($ratinContractor)
+        {
+            $ratinContractor->select('contractor_id','user_id','comment','rate');
+        },
+        'user'=> function($userDetails){
+            $userDetails->select('id','username','phone','email');
+        }
+        ])
+        ->where('id',$request->contractor_id)->first();
+
+        if (!$contractor_id)
+        {
+            return $this->ErrorResponse('Contractor not found', 404);
+        }
+
+        return $this->SuccessResponse($contractor_id,'Contractor profile retrieved successfully',200);
+    }
+
 
     public function searchNearbyContractors(Request $request)
     {

@@ -76,6 +76,11 @@ Route::middleware(['role:homeowner'])->group(function () {
     Route::post('/acceptContract',[ContractController::class,'acceptContract'])->middleware('auth:sanctum');
     //مسار لرفض عقد
     Route::post('/rejectContract',[ContractController::class,'rejectContract'])->middleware('auth:sanctum');
+    //مسار لعرض صفحة ال contractor
+    Route::post('/getContractorProfilePage',[ContractorController::class,'getContractorProfilePage'])->middleware('auth:sanctum');
+    //
+    Route::post('/getAllContractsForHomeowner',[HomeOwnerController::class,'getAllContractsForHomeowner'])->middleware('auth:sanctum');
+
 
 
 });
@@ -98,8 +103,6 @@ Route::middleware(['role:contractor'])->group(function () {
     Route::post('/showTask',[TaskController::class,'showTask'])->middleware('auth:sanctum');
     //مسار لقبول التاسك
     Route::post('/acceptTask',[TaskController::class,'acceptTask'])->middleware('auth:sanctum');
-
-
 
 });
 

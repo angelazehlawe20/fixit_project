@@ -15,11 +15,11 @@ class Image extends Model
 
     public function task_image()
     {
-        return $this->hasMany(Task_image::class);
+        return $this->hasMany(Task_image::class, 'image_id');
     }
 
     public function portfolio_image()
     {
-        return $this->hasMany(Portfolio_image::class);
+        return $this->hasMany(Portfolio_image::class ,'image_id');
     }
 }

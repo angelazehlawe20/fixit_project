@@ -15,6 +15,7 @@ class Contractor extends Model
         'description'
     ];
 
+
     public function portfolio()
     {
         // علاقة one to one مع صاحب العمل
@@ -29,7 +30,7 @@ class Contractor extends Model
     public function user()
     {
         // تعني "تابع الى" ..يعني ان صاحب العمل ينتمي إلى مستخدم واحد فقط.
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
     public function category()

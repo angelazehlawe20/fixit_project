@@ -42,8 +42,6 @@ class User extends Authenticatable
         'email_verified_at',
         'device_token',
         'banned_at',
-        'otp_code',
-        'otp_expires_at'
 
     ];
 

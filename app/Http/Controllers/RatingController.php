@@ -22,6 +22,7 @@ class RatingController extends Controller
             'comment' => 'string|max:1000',
             'rate' => 'required|integer|min:1|max:5',
         ]);
+        
         // التحقق من وجود أخطاء في التحقق
         if($validation->fails())
         {

@@ -16,11 +16,11 @@ class Portfolio_image extends Model
 
     public function image()
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(Image::class,'image_id');
     }
 
     public function portfolio()
     {
-        return $this->belongsTo(Portfolio::class);
+        return $this->belongsTo(Portfolio::class,'portfolio_id');
     }
 }

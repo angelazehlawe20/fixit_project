@@ -16,16 +16,16 @@ class Portfolio extends Model
 
     public function portfolio_image()
     {
-        return $this->hasMany(Portfolio_image::class);
+        return $this->hasMany(Portfolio_image::class,'portfolio_id');
     }
 
     public function contractor()
     {
-        return $this->belongsTo(Contractor::class);
+        return $this->belongsTo(Contractor::class,'contractor_id');
     }
 
     public function task()
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Task::class,'task_id');
     }
 }
