@@ -78,8 +78,13 @@ Route::middleware(['role:homeowner'])->group(function () {
     Route::post('/rejectContract',[ContractController::class,'rejectContract'])->middleware('auth:sanctum');
     //مسار لعرض صفحة ال contractor
     Route::post('/getContractorProfilePage',[ContractorController::class,'getContractorProfilePage'])->middleware('auth:sanctum');
-    //
+    //مسار لعرض العقود المرسلة لصاحب البيت
     Route::post('/getAllContractsForHomeowner',[HomeOwnerController::class,'getAllContractsForHomeowner'])->middleware('auth:sanctum');
+    //مسار لعرض الايصالات المرسلة لصاحب البيت
+    Route::post('/getAllReceiptsForHomeowner',[HomeOwnerController::class,'getAllReceiptsForHomeowner'])->middleware('auth:sanctum');
+    //مسار لعرض تفاصيل عقد
+    Route::post('/viewContract',[ContractController::class,'viewContract'])->middleware('auth:sanctum');
+
 
 
 
@@ -90,7 +95,7 @@ Route::middleware(['role:contractor'])->group(function () {
     //مسار لاضافة معرض اعمال لصاحب عمل معين
     Route::post('/addPortfolio',[PortfolioController::class,'addPortfolio'])->middleware('auth:sanctum');
     //مسار لعرض المهام الخاصة ب contractor معين
-    Route::post('/getTasksOfContractor',[TaskController::class,'getTasksOfContractor'])->middleware('auth:sanctum');
+    Route::post('/getTasksOfContractor',[ContractorController::class,'getTasksOfContractor'])->middleware('auth:sanctum');
     //مسار لاضافة ايصال
     Route::post('/addReceipt',[ReceiptController::class,'addReceipt'])->middleware('auth:sanctum');
     //مسار لاضافة عقد

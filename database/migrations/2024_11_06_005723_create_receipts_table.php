@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('contract_id');
             $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
-            $table->double('amount');
-            $table->boolean('status')->default(0);
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 

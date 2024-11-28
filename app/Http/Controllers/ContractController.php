@@ -75,4 +75,33 @@ class ContractController extends Controller
         return $this->SuccessResponse($contract_id,'Status of contract updated successfully',200);
     }
 
+    public function viewContract(Request $request)
+    {
+        $validation = Validator::make($request->all(),[
+            'contract_id' => 'required|exists:contracts,id'
+        ]);
+
+        if($validation->fails())
+        {
+            return $this->ErrorResponse($validation->errors(),422);
+        }
+
+        $contract = Contract::select('task_id','payment_date','price','end_date',)->with(['task'=>function($query)
+        {
+            $query->select('id','title','description','city','country','address');
+        },
+        'task.task_image.image' =>function($query)
+        {
+            $query->select('id','name');
+        },
+        ])
+        ->where('id',$request->contract_id)->first();
+
+        if(!$contract)
+        {
+            return $this->ErrorResponse('contract not found',404);
+        }
+        return $this->SuccessResponse($contract,'contract retrieved successfully',200);
+    }
+
 }

@@ -22,7 +22,7 @@ class RatingController extends Controller
             'comment' => 'string|max:1000',
             'rate' => 'required|integer|min:1|max:5',
         ]);
-        
+
         // التحقق من وجود أخطاء في التحقق
         if($validation->fails())
         {
@@ -58,6 +58,7 @@ class RatingController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
+        // التحقق من وجود أخطاء في التحقق
         if($validation->fails())
         {
             return $this->ErrorResponse($validation->errors(),422);
@@ -75,21 +76,24 @@ class RatingController extends Controller
 
     public function getAllRatingForContractor(Request $request)
     {
+        // تحقق من صحة البيانات المدخلة
         $validation = Validator::make($request->all(),[
             'contractor_id'=>'required|exists:contractors,id'
         ]);
 
+        // التحقق من وجود أخطاء في التحقق
         if($validation->fails())
         {
             return $this->ErrorResponse($validation->errors(),422);
         }
-
+        // جلب تقييمات ال contractors 
         $allRatingForContractor = Rating::where('contractor_id',$request->contractor_id)->with('user')->get();  //('user') تدل على اسم العلاقة في ال model
 
         if($allRatingForContractor->isEmpty())
         {
             return $this->ErrorResponse('No reviews found for this contractor',404);
         }
+
         return $this->SuccessResponse($allRatingForContractor,'all reviews for this contractor',200);
     }
 

@@ -35,29 +35,7 @@ class TaskController extends Controller
 
 
 
-    public function getTasksOfContractor(Request $request)
-    {
 
-        // تحقق من صحة البيانات المدخلة
-        $validation = Validator::make($request->all(), [
-        'contractor_id' => 'required|exists:contractors,id'
-        ]);
-
-       // التحقق من وجود أخطاء في التحقق
-       if ($validation->fails()) {
-        return $this->ErrorResponse($validation->errors(), 422);
-    }
-
-      // جلب المهام للمقاول المحدد في الطلب
-      $allTasks = Task::where('contractor_id', $request->contractor_id)->get();
-
-    if ($allTasks->isEmpty())
-    {
-        return $this->ErrorResponse('No tasks found', 404);
-    }
-
-    return $this->SuccessResponse($allTasks, 'All tasks', 200);
-    }
 
 
 
@@ -187,6 +165,7 @@ class TaskController extends Controller
         return $this->SuccessResponse($taskImages,'Images for this task',200);
     }
 
+    
     public function acceptTask(Request $request)
     {
         $validation = Validator::make($request->all(),[

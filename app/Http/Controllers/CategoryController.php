@@ -91,7 +91,17 @@ class CategoryController extends Controller
             return $this->ErrorResponse($validation->errors(),422);
         }
 
-        $allContractors=Contractor::where('category_id',$request->category_id)->get();
+        $allContractors=Contractor::select('id','user_id','category_id','description')->with([
+            'user'=>function($query)
+            {
+                $query->select('id','username','phone','email','city','country','address');
+            },
+            'rating' =>function($query)
+            {
+                $query->select('contractor_id','rate');
+            }
+            ])
+            ->where('category_id',$request->category_id)->get();
 
         if($allContractors->isEmpty())
         {

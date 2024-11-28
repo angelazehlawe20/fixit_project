@@ -11,8 +11,7 @@ class Receipt extends Model
 
     protected $fillable=[
         'contract_id',
-        'amount',
-        'status'
+
     ];
 
     public function contract()

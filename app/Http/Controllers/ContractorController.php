@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\FixitTrait;
 use App\Models\User;
 use App\Models\Contractor;
+use App\Models\Task;
 use Illuminate\Support\Facades\Validator;
 
 class ContractorController extends Controller
@@ -85,6 +86,34 @@ class ContractorController extends Controller
             return $this->ErrorResponse('Sorry No Result Found',404);
         }
         return $this->SuccessResponse($nearbyContractors,'Contractors found in your area',200);
+    }
+
+
+    public function getTasksOfContractor(Request $request)
+    {
+
+        // تحقق من صحة البيانات المدخلة
+        $validation = Validator::make($request->all(), [
+        'contractor_id' => 'required|exists:contractors,id'
+        ]);
+
+       // التحقق من وجود أخطاء في التحقق
+       if ($validation->fails()) {
+        return $this->ErrorResponse($validation->errors(), 422);
+    }
+
+      // جلب المهام للمقاول المحدد في الطلب
+      $allTasks = Task::with(['user'=>function($query){
+        $query->select('id','username','email','city','country','address','phone');
+    }])
+    ->where('contractor_id', $request->contractor_id)->get();
+
+    if ($allTasks->isEmpty())
+    {
+        return $this->ErrorResponse('No tasks found', 404);
+    }
+
+    return $this->SuccessResponse($allTasks, 'All tasks', 200);
     }
 
 }
