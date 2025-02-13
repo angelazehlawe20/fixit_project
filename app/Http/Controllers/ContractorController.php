@@ -14,6 +14,7 @@ class ContractorController extends Controller
     use FixitTrait;
 
 
+    // عرض صفحة العامل مع التفاصيل والتقييمات
     public function getContractorProfilePage(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -49,6 +50,7 @@ class ContractorController extends Controller
     }
 
 
+    // البحث عن العامل الاقرب
     public function searchNearbyContractors(Request $request)
     {
         // تحقق من صحة البيانات المدخلة
@@ -89,6 +91,7 @@ class ContractorController extends Controller
     }
 
 
+    // عرض المهام الخاصة بالعامل
     public function getTasksOfContractor(Request $request)
     {
 

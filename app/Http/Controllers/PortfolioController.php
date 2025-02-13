@@ -17,6 +17,7 @@ class PortfolioController extends Controller
     use FixitTrait;
 
 
+    // اضافة معرض اعمال
     public function addPortfolio(Request $request)
     {
         // تحقق من صحة البيانات المدخلة
@@ -48,6 +49,7 @@ class PortfolioController extends Controller
         return $this->SuccessResponse($newPortfolio,'Portfolio added successfully',201);
     }
 
+    // اضافة صورة الى معرض الاعمال
     public function addImageToPortfolio(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -72,6 +74,7 @@ class PortfolioController extends Controller
     }
 
 
+    // عرض الصور الخاصة بالمهمة
     public function getTaskPortfolioImages(Request $request)
     {
         // تحقق من وجود الـ task_id
@@ -101,6 +104,7 @@ class PortfolioController extends Controller
     }
 
 
+    // حذف صورة الى ال معرض الاعمال
     public function deletePortfolioImage(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -118,7 +122,7 @@ class PortfolioController extends Controller
         // التحقق إذا لم يتم العثور على الصورة في جدول portfolio_images
         if(!$image)
         {
-            return $this->ErrorResponse('Portfolio image not found',404);
+            return $this->ErrorResponse('Image not found',404);
         }
 
         // حذف الصورة من جدول portfolio_images
@@ -129,6 +133,7 @@ class PortfolioController extends Controller
         return $this->SuccessResponse(null,'Image deleted successfully',200);
     }
 
+    //عرض صورة من معرض الاعمال
     public function showPortfolioImage(Request $request)
     {
         $validation = Validator::make($request->all(),[

@@ -14,6 +14,8 @@ class RatingController extends Controller
 {
     use FixitTrait;
 
+
+    // اضافة تقييم
     public function addRate(Request $request)
     {
         // تحقق من صحة البيانات المدخلة
@@ -51,6 +53,7 @@ class RatingController extends Controller
 
 
 
+    // ترتيب العاملين حسب تقييماتهم
     public function sortContractorsByRating(Request $request)
     {
         // تحقق من صحة البيانات المدخلة
@@ -74,6 +77,7 @@ class RatingController extends Controller
     }
 
 
+    // عرض تقييمات العامل المحدد
     public function getAllRatingForContractor(Request $request)
     {
         // تحقق من صحة البيانات المدخلة

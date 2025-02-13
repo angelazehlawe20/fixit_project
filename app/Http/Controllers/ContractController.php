@@ -13,6 +13,7 @@ class ContractController extends Controller
 {
     use FixitTrait;
 
+    // انشاء عقد
     public function addContract(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -38,6 +39,8 @@ class ContractController extends Controller
         return $this->SuccessResponse($contract,'contract added successfully',201);
     }
 
+
+    // قبول العقد
     public function acceptContract(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -57,6 +60,7 @@ class ContractController extends Controller
     }
 
 
+    // رفض العقد
     public function rejectContract(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -75,6 +79,8 @@ class ContractController extends Controller
         return $this->SuccessResponse($contract_id,'Status of contract updated successfully',200);
     }
 
+
+    // رؤية العقد وتفاصيله
     public function viewContract(Request $request)
     {
         $validation = Validator::make($request->all(),[

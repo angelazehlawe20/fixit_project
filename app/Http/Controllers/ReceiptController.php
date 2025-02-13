@@ -11,6 +11,7 @@ class ReceiptController extends Controller
 {
     use FixitTrait;
 
+    // انشاء ايصال
     public function addReceipt(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -32,7 +33,7 @@ class ReceiptController extends Controller
     }
 
 
-
+    // عرض تفاصيل الايصال
     public function getReceipt(Request $request)
     {
         $validation = Validator::make($request->all(),[

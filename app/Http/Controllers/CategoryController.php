@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\FixitTrait;
 use App\Models\Category;
 use App\Models\Contractor;
+use App\Models\CategoryImage;
+use App\Models\Image;
 
 class CategoryController extends Controller
 {
     use FixitTrait;
 
+    //عرض الخدمات
     public function getAllCategories()
     {
         $categories = Category::all();
@@ -19,7 +22,7 @@ class CategoryController extends Controller
     }
 
 
-
+    // اضافة خدمة
     public function addCategory(Request $request)
     {
         $validation=Validator::make($request->all(),[
@@ -52,12 +55,13 @@ class CategoryController extends Controller
     }
 
 
-
-    public function editCategoryName(Request $request)
+    // تعديل اسم او صورة خدمة
+    public function editCategoryNameOrImage(Request $request)
     {
         $validation = Validator::make($request->all(),[
             'category_id' => 'required',
-            'new_category_name' => 'required|string|max:255'
+            'new_category_name' => 'nullable|string|max:255',
+            'new_category_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // التحقق من الصورة
         ]);
 
         if($validation->fails())
@@ -65,21 +69,44 @@ class CategoryController extends Controller
             return $this->ErrorResponse($validation->errors(),422);
         }
 
-        $category = Category::where('id',$request->category_id)->first();
+        $category = Category::find($request->category_id);
 
         if(!$category)
         {
             return $this->ErrorResponse('category not found',404);
         }
 
-        $category->category_name=$request->new_category_name;
-        $category->save();
+        // تحديث اسم الخدمة إذا تم توفير اسم جديد
+        if ($request->has('new_category_name')) {
+            $category->category_name = $request->new_category_name;
+            $category->save();
+        }
 
-        return $this->SuccessResponse($category,'category name updated successfully',200);
+        // تحديث صورة الخدمة إذا تم توفير صورة جديدة
+        if ($request->hasFile('new_category_image')) {
+        // حذف الصورة القديمة إذا كانت موجودة
+        $oldImage = CategoryImage::where('category_id', $category->id)->first();
+        if ($oldImage) {
+            Storage::delete($oldImage->image_url); // حذف الصورة من التخزين
+            $oldImage->delete(); // حذف السجل من قاعدة البيانات
+        }
+
+        // حفظ الصورة الجديدة
+        $imagePath = $request->file('new_category_image')->store('category_images', 'public');
+
+        // إنشاء سجل جديد للصورة
+        $image = Image::create(['image_url' => $imagePath]);
+        CategoryImage::create([
+            'category_id' => $category->id,
+            'image_id' => $image->id,
+        ]);
+    }
+    return $this->SuccessResponse($category, 'Category name and image updated successfully', 200);
+    
     }
 
 
-
+    // عرض كل العقود الخاصة في الخدمة المحددة
     public function getAllContractorsInOneCategory(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -112,7 +139,7 @@ class CategoryController extends Controller
     }
 
 
-
+    // البحث عن خدمة
     public function searchCategory(Request $request)
     {
         $validation = Validator::make($request->all(),[

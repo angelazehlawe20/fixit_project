@@ -13,6 +13,7 @@ class HomeOwnerController extends Controller
     use FixitTrait;
 
 
+    // العقود الخاصة بالمستخدم
     public function getAllContractsForHomeowner(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -41,6 +42,7 @@ class HomeOwnerController extends Controller
     }
 
 
+    //الايصالات المتعلقة بالمستخدم
     public function getAllReceiptsForHomeowner(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -76,7 +78,7 @@ class HomeOwnerController extends Controller
             $query->where('user_id', $user_id); // التأكد من أن الايصالات مرتبطة بالمستخدم
         })
         ->get();
-        return $this->SuccessResponse($receipts,'',200);
+        return $this->SuccessResponse($receipts,'Receipts retrieved successfully',200);
     }
 
 }

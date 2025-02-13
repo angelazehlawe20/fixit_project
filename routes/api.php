@@ -130,7 +130,7 @@ Route::middleware(['role:homeowner,contractor'])->group(function () {
 // مجموعة مسارات خاصة بال (admin) فقط، محمية بواسطة Middleware 'role:admin'
 //Route::middleware(['role:admin'])->group(function () {
     //مسار لتغيير اسم الفئة
-    Route::post('/categoryNameUpdated',[CategoryController::class,'editCategoryName'])->middleware('auth:sanctum');
+    Route::post('/editCategoryNameOrImage',[CategoryController::class,'editCategorynameOrImage'])->middleware('auth:sanctum');
     //مسار لاضافة خدمة لصاحب العمل
     Route::post('/addCategory',[CategoryController::class,'addCategory'])->middleware('auth:sanctum');
 //});

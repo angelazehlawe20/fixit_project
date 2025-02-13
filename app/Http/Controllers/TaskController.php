@@ -14,6 +14,7 @@ class TaskController extends Controller
 {
     use FixitTrait;
 
+    // عرض المهمة
     public function showTask(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -34,11 +35,7 @@ class TaskController extends Controller
     }
 
 
-
-
-
-
-
+    // انشاء مهمة
     public function addTask(Request $request)
     {
 
@@ -90,6 +87,7 @@ class TaskController extends Controller
     }
 
 
+    // اضافة صور للمهمة
     public function addTaskImage(Request $request)
     {
         // التحقق من صحة البيانات المدخلة
@@ -122,6 +120,7 @@ class TaskController extends Controller
         return $this->SuccessResponse($Image_added,'Image added to task successfully.',201);
     }
 
+    // حذف صورة من صور المهمة
     public function deleteTaskImage(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -145,6 +144,7 @@ class TaskController extends Controller
         return $this->SuccessResponse(null,'Image deleted successfully',200);
     }
 
+    // عرض صورة من صور المهمة
     public function showTaskImages(Request $request)
     {
         $validation = Validator::make($request->all(),[
@@ -165,7 +165,7 @@ class TaskController extends Controller
         return $this->SuccessResponse($taskImages,'Images for this task',200);
     }
 
-    
+    // قبول المهمة
     public function acceptTask(Request $request)
     {
         $validation = Validator::make($request->all(),[
