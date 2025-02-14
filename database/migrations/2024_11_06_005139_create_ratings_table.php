@@ -17,10 +17,13 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('contractor_id');
             $table->foreign('contractor_id')->references('id')->on('contractors')->onDelete('cascade');
-            $table->string('comment');
-            $table->integer('rate')->default(0);
+            $table->text('comment')->nullable();
+            $table->unsignedTinyInteger('rate')->default(0);
             $table->timestamp('rated_at')->useCurrent();
             $table->timestamps();
+
+            // ضمان أن rate لا يكون خارج النطاق 1-5
+            $table->check('rate BETWEEN 1 AND 5');
         });
     }
 

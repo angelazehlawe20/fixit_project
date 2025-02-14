@@ -9,15 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
-    // الحقول القابلة للتعبئة في قاعدة البيانات
-    protected $fillable=[
-        'category_name',
-        'image'
-    ];
+    protected $fillable = ['category_name'];
 
-    public function contractor()
+    public function images()
     {
-        // علاقة "واحد إلى متعدد" حيث يمكن لل category أن تحتوي على عدة contractor
-        return $this->hasMany(Contractor::class);
+        return $this->belongsToMany(Image::class, 'category_images', 'category_id', 'image_id');
     }
 }
+
