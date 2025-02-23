@@ -10,16 +10,29 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable=[
-        'name'
+        'name',
+        'imageable_type',
+        'imageable_id'
     ];
 
-    public function task_image()
+    public function category()
     {
-        return $this->hasMany(Task_image::class, 'image_id');
+        return $this->belongsTo(Category::class);
     }
 
-    public function portfolio_image()
+    public function portfolio()
     {
-        return $this->hasMany(Portfolio_image::class ,'image_id');
+        return $this->belongsTo(Portfolio::class);
     }
+
+    public function receipt()
+    {
+        return $this->belongsTo(Receipt::class);
+    }
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
+    
 }

@@ -12,17 +12,29 @@ class Rating extends Model
     protected $fillable=[
         'user_id',
         'contractor_id',
+        'task_id',
         'comment',
-        'rate'
+        'rate_value'
     ];
+
+    public function contrctor()
+    {
+        return $this->belongsTo(Contractor::class);
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function contractor()
+    public function task()
     {
-        return $this->belongsTo(Contractor::class);
+        return $this->belongsTo(Task::class);
     }
+
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
+   
 }

@@ -14,18 +14,14 @@ class Portfolio extends Model
         'title'
     ];
 
-    public function portfolio_image()
+    public function image()
     {
-        return $this->hasMany(Portfolio_image::class,'portfolio_id');
+        return $this->hasMany(Image::class);
     }
 
     public function contractor()
     {
-        return $this->belongsTo(Contractor::class,'contractor_id');
+        return $this->belongsTo(contractor::class);
     }
-
-    public function task()
-    {
-        return $this->belongsTo(Task::class,'task_id');
-    }
+    
 }

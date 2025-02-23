@@ -15,22 +15,9 @@ class Contractor extends Model
         'description'
     ];
 
-
-    public function portfolio()
-    {
-        // علاقة one to one مع صاحب العمل
-        return $this->hasMany(Portfolio::class);
-    }
-
-    public function task()
-    {
-        return $this->hasMany(Task::class,'contractor_id');
-    }
-
     public function user()
     {
-        // تعني "تابع الى" ..يعني ان صاحب العمل ينتمي إلى مستخدم واحد فقط.
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(user::class);
     }
 
     public function category()
@@ -38,14 +25,24 @@ class Contractor extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function notification()
+    public function portfolio()
     {
-        return $this->hasMany(Notification::class);
+        return $this->hasOne(Portfolio::class);
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
     }
 
     public function rating()
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
     }
 
 }

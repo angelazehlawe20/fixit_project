@@ -11,11 +11,25 @@ class Receipt extends Model
 
     protected $fillable=[
         'contract_id',
+        'amount',
+        'status'
 
     ];
+
+    public function image()
+    {
+        return $this->hasMany(Image::class);
+    }
 
     public function contract()
     {
         return $this->belongsTo(Contract::class);
     }
+
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    
 }

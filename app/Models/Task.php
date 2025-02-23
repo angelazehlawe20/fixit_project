@@ -11,17 +11,13 @@ class Task extends Model
     protected $fillable=[
         'user_id',
         'contractor_id',
-        'address',
-        'city',
-        'country',
         'title',
-        'task_status',
         'description'
     ];
 
-    public function user()
+    public function image()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Image::class);
     }
 
     public function contractor()
@@ -29,16 +25,25 @@ class Task extends Model
         return $this->belongsTo(Contractor::class);
     }
 
-    public function task_image()
+    public function notification()
     {
-        return $this->hasMany(Task_image::class);
+        return $this->hasMany(Notification::class);
     }
 
-    //تعني أن النموذج الأول مرتبط بالنموذج الثاني عن طريق علاقة hasMany
-    //والنموذج الثاني مرتبط بالنموذج الثالث أيضًا عن طريق علاقة hasMany
-    public function portfolios()
+    public function contract()
     {
-        return $this->hasManyThrough(Portfolio::class, Contractor::class);
+        return $this->hasOne(Contract::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function rating()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
 
 }

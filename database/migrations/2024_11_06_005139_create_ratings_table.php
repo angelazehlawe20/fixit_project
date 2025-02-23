@@ -17,8 +17,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('contractor_id');
             $table->foreign('contractor_id')->references('id')->on('contractors')->onDelete('cascade');
+            $table->unsignedBigInteger('task_id');
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->string('comment');
-            $table->integer('rate')->default(0);
+            $table->integer('rate_value')->default(0);
             $table->timestamp('rated_at')->useCurrent();
             $table->timestamps();
         });

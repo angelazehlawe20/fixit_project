@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('task_id');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->date('payment_date');
+            $table->date('payment_end_date');
             $table->double('price');
-            $table->date('end_date');
+            $table->date('task_done_date');
             $table->enum('contract_status',['accept','reject','pending'])->default('pending');
             $table->timestamps();
         });

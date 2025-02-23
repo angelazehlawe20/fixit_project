@@ -17,9 +17,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('contractor_id');
             $table->foreign('contractor_id')->references('id')->on('contractors')->onDelete('cascade');
-            $table->string('address');
-            $table->string('city');
-            $table->string('country');
             $table->string('title');
             $table->string('description');
             $table->enum('task_status',['waiting','accept','finish'])->default('waiting');

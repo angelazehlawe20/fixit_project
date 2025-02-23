@@ -11,19 +11,25 @@ class Contract extends Model
 
     protected $fillable=[
         'task_id',
-        'payment_date',
+        'payment_end_date',
         'price',
-        'end_date',
-        'contract_status'
+        'task_done_date',
+        'completation_status'
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
+
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
 
     public function receipt()
     {
         return $this->hasOne(Receipt::class);
     }
-
-    public function task()
-    {
-        return $this->belongsTo(Task::class,'task_id');
-    }
+    
 }

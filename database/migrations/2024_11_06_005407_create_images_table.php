@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('imageable_type'); // نوع الكيان المرتبط بالصورة (task, portfolio, receipt, category)
+            $table->unsignedBigInteger('imageable_id')->index(); // معرف الكيان المرتبط بالصورة
             $table->timestamps();
         });
     }

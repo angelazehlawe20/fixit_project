@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('contractor_id');
             $table->foreign('contractor_id')->references('id')->on('contractors')->onDelete('cascade');
-            $table->string('type');
+            // Polymorphic Relationship
+            $table->string('notifiable_type'); // نوع الكيان (task, contract, rating, receipt, portfolio)
+            $table->unsignedBigInteger('notifiable_id'); // ID الخاص بالكيان المرتبط
             $table->string('content');
             $table->boolean('is_read')->default(0);
             $table->timestamps(); 

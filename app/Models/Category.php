@@ -12,12 +12,15 @@ class Category extends Model
     // الحقول القابلة للتعبئة في قاعدة البيانات
     protected $fillable=[
         'category_name',
-        'image'
     ];
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
+    }
 
     public function contractor()
     {
-        // علاقة "واحد إلى متعدد" حيث يمكن لل category أن تحتوي على عدة contractor
         return $this->hasMany(Contractor::class);
     }
 }
